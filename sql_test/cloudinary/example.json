@@ -1,0 +1,23 @@
+{
+  "url": "http://res.cloudinary.com/dljazkzna/image/upload/v1604855956/podguz/565.jpg",
+  "etag": "855658c563e97c982b2e0a3f2dafcf08",
+  "tags": [
+    "podguz"
+  ],
+  "type": "upload",
+  "bytes": 36222,
+  "width": 455,
+  "format": "jpg",
+  "height": 312,
+  "version": 1604855956,
+  "asset_id": "a6d89ad3da24faa8d95df1c7c3200ff6",
+  "public_id": "podguz/565",
+  "signature": "85466ca7ee14837208f13695256a2777e32abc38",
+  "created_at": "2020-11-08T17:19:16Z",
+  "secure_url": "https://res.cloudinary.com/dljazkzna/image/upload/v1604855956/podguz/565.jpg",
+  "version_id": "4e0f50e2a1281cf07754fe0b0c528316",
+  "overwritten": true,
+  "placeholder": false,
+  "resource_type": "image",
+  "original_filename": "565"
+}
