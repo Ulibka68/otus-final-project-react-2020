@@ -2,7 +2,9 @@
 
 
 Прообраз заготовки:
+
 https://next-auth.js.org/
+
 https://github.com/nextauthjs/next-auth-example
 
 github авторизация - получить token

@@ -72,10 +72,12 @@ dist
 .vercel
 .now
 .env.local
+.env.production
 заметки.txt
 
 .DS_Store
 .idea
 .run
+.secret
 
 
