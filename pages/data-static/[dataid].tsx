@@ -5,6 +5,7 @@ import Layout from "components/layout";
 import { queryOneItem } from "utils/sqlWorks";
 import { log } from "util";
 import Image from "next/image";
+import { GoodsDescription } from "components/goods-description";
 
 // https://nextjs.org/docs/basic-features/data-fetching#swr
 // The team behind Next.js has created a React hook for data fetching called SWR.
@@ -47,10 +48,12 @@ export default function OneItem(
           <div>
             <p>название : {props.post.название}</p>
             <p>цена : {props.post["розничная цена"]}</p>
-            <p>
-              {" "}
-              <b>описание</b> : {props.post.описание}
-            </p>
+            <div>
+              <b>описание</b> :{/*{props.post.описание}*/}
+              <GoodsDescription
+                description={props.post.описание}
+              ></GoodsDescription>
+            </div>
           </div>
           <div>
             {/*  картинка*  src={pictURL} */}

@@ -7,13 +7,17 @@ export default function Page(props) {
   // populated on render without needing to go through a loading stage.
   // This is possible because of the shared context configured in `_app.js` that
   // is used by `useSession()`.
-  const [session, loading] = useSession();
+  // const [session, loading] = useSession();
+
   console.log(props);
   return (
     <Layout>
       <h1>Server Side Rendering</h1>
       <p>props: {props.retProps.nextProp}</p>
-      <p>seesion user email: {props.retProps.session.user.email}</p>
+      <p style={{ color: "blue" }}>
+        sesion user name:{" "}
+        {props.retProps.session && props.retProps.session.user.name}
+      </p>
 
       <p>
         This page uses the universal <strong>getSession()</strong> method in{" "}
@@ -41,7 +45,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       retProps: {
-        nextProp: "Вася nextProp",
+        nextProp: "Эти props переданы c сервера",
         session: await getSession(context),
       },
     },
