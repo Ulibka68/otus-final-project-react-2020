@@ -2,6 +2,8 @@
 const mysql = require("serverless-mysql");
 import { ServerlessMysql } from "serverless-mysql";
 
+// добавил env на vercel
+
 const db: ServerlessMysql = mysql({
   config: {
     host: "gayrat.beget.tech",
