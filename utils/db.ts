@@ -3,6 +3,7 @@ const mysql = require("serverless-mysql");
 import { ServerlessMysql } from "serverless-mysql";
 
 // добавил env на vercel
+// https://vercel.com/guides/deploying-next-and-mysql-with-vercel
 
 const db: ServerlessMysql = mysql({
   config: {

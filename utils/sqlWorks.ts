@@ -1,6 +1,7 @@
 // данный код выболняется на стороне сервера
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const mysql = require("serverless-mysql");
+// // eslint-disable-next-line @typescript-eslint/no-var-requires
+// const mysql = require("serverless-mysql");
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const escape = require("sql-template-strings");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
