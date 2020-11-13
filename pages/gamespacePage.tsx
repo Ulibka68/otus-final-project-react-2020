@@ -1,3 +1,19 @@
+import Layout from "../components/layout";
+import { useSession } from "next-auth/client";
+import Image from "next/image";
+import React from "react";
+// eslint-disable-next-line no-restricted-syntax
+export default function Page() {
+  const [session, loading] = useSession();
+  console.log(session);
+  return (
+    <Layout>
+      <p>Заготовка для game of life</p>
+    </Layout>
+  );
+}
+
+/*
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { LifeGameRootState } from "redux/store";
@@ -62,3 +78,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 export const GameSpacePage = connector(GameSpacePageClass);
+
+
+ */
