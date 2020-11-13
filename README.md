@@ -43,3 +43,12 @@ https://www.npmjs.com/package/sql-template-strings
  
  vercel secrets add secret1 "secret1"
  vercel -e MY_SECRET1=@secret1
+ 
+ ===============
+ EMOTION
+ Добавил специальные версии emotion
+   "@emotion/cache": "11.0.0-next.12",
+     "@emotion/css": "11.0.0-next.12",
+     "@emotion/react": "11.0.0-next.12",
+     "@emotion/server": "11.0.0-next.12",
+     "@emotion/styled": "11.0.0-next.12",

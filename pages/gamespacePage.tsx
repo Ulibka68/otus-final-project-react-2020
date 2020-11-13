@@ -1,10 +1,10 @@
 import React from "react";
-import { css } from "@emotion/core";
-import styled from "@emotion/styled";
 import { connect, ConnectedProps } from "react-redux";
 import { LifeGameRootState } from "redux/store";
 import * as life from "components/Life/life_reducer";
 import { GameSpace } from "components/Life/gameSpace";
+import { keyframes, css, Global } from "@emotion/react";
+import styled from "@emotion/styled";
 
 const FlexWrapper = styled.div`
   display: flex;
