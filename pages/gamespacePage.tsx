@@ -1,16 +1,21 @@
 import React from "react";
 import Layout from "components/layout";
 import { useSession } from "next-auth/client";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, ConnectedProps } from "react-redux";
 import { NextPageContext, NextPage } from "next";
 import * as life from "components/Life/life_reducer";
 import { wrapper, LifeGameRootState } from "@redux/store";
+
+import { GameSpace } from "components/Life/gameSpace";
+import { keyframes, css, Global } from "@emotion/react";
+import styled from "@emotion/styled";
 
 interface OtherProps {
 	msg: string;
 	appProp: string;
 }
 
+/*
 const LifeGame: NextPage<OtherProps> = ({ msg }) => {
 	const [session, loading] = useSession();
 	const currentLifeState: life.lifeStateType = useSelector<life.lifeStateType, life.lifeStateType>((state) => state);
@@ -30,6 +35,7 @@ const LifeGame: NextPage<OtherProps> = ({ msg }) => {
 
 // eslint-disable-next-line no-restricted-syntax
 export default LifeGame;
+*/
 
 export const getStaticProps = wrapper.getStaticProps(({ store }) => {
 	// Провести начальную инициализацию жизни
@@ -41,63 +47,58 @@ export const getStaticProps = wrapper.getStaticProps(({ store }) => {
 	return { props: { msg: "LifeGame getStaticProps" } };
 });
 
-/*
-import React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { LifeGameRootState } from "redux/store";
-import * as life from "components/Life/life_reducer";
-import { GameSpace } from "components/Life/gameSpace";
-import { keyframes, css, Global } from "@emotion/react";
-import styled from "@emotion/styled";
-
 const FlexWrapper = styled.div`
-  display: flex;
-  gap: 30px;
+	display: flex;
+	gap: 30px;
 `;
 
 const Btn = styled.button`
-  margin-top: 20px;
+	margin-top: 20px;
 `;
 
-class GameSpacePageClass extends React.Component<Props> {
-  calcNextState = () => {
-    this.props.nextState(null);
-    // this.forceUpdate();
-  };
+const GameSpacePageClass: NextPage<OtherProps & PropsFromRedux> = (props) => {
+	function calcNextState(e) {
+		e.preventDefault();
+		props.nextState(null);
+		// this.forceUpdate();
+	}
 
-  startTimerSaga = () => {
-    this.props.startTimer();
-  };
+	function startTimerSaga(e) {
+		e.preventDefault();
+		props.startTimer();
+	}
 
-  stopTimerSaga = () => {
-    this.props.stopTimer();
-  };
+	function stopTimerSaga(e) {
+		e.preventDefault();
+		props.stopTimer();
+	}
 
-  componentWillUnmount() {
-    this.stopTimerSaga();
-  }
+	/*
+	componentWillUnmount() {
+		this.stopTimerSaga();
+	}
+   */
 
-  render() {
-    return (
-      <div>
-        <FlexWrapper>
-          <GameSpace cellSize={20} showNeighbors={false} />
-          <GameSpace cellSize={20} showNeighbors={true} />
-        </FlexWrapper>
+	return (
+		<div>
+			<FlexWrapper>
+				<GameSpace cellSize={20} showNeighbors={false} />
+				<GameSpace cellSize={20} showNeighbors={true} />
+			</FlexWrapper>
 
-        <Btn onClick={this.calcNextState}>Следующее состояние</Btn>
-        <Btn onClick={this.startTimerSaga}>Запустить таймер</Btn>
-        <Btn onClick={this.stopTimerSaga}>Остановить таймер</Btn>
-      </div>
-    );
-  }
-}
+			<p>{props.msg}</p>
+			<Btn onClick={calcNextState}>Следующее состояние</Btn>
+			<Btn onClick={startTimerSaga}>Запустить таймер</Btn>
+			<Btn onClick={stopTimerSaga}>Остановить таймер</Btn>
+		</div>
+	);
+};
 
 const connector = connect((state: LifeGameRootState) => state.lifeState, {
-  caclNeighbors: life.caclNeighbors,
-  nextState: life.nextState,
-  stopTimer: life.stopTimer,
-  startTimer: life.startTimer,
+	caclNeighbors: life.caclNeighbors,
+	nextState: life.nextState,
+	stopTimer: life.stopTimer,
+	startTimer: life.startTimer,
 });
 
 // The inferred type will look like:
@@ -106,6 +107,3 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 export const GameSpacePage = connector(GameSpacePageClass);
-
-
- */
