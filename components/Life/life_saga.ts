@@ -3,15 +3,6 @@ import { eventChannel, END } from "redux-saga";
 
 import { nextState, stopTimer } from "./life_reducer";
 
-function* tesSagaJob() {
-  console.error("Hello Sagas!");
-  yield takeEvery("LIFE_NEXT_STATE_ASYNC", nextLifeStateAsync);
-}
-
-export function* lifeSaga() {
-  yield fork(tesSagaJob);
-}
-
 const delay = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
 
 // обновить состояние с задержкой 1 сек
