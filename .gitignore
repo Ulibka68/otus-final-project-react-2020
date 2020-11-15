@@ -65,6 +65,7 @@ dist
 
 .vercel
 .now
+temp
 
 # dotenv environment variables file
 .env.local

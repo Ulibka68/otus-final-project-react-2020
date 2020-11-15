@@ -26,6 +26,7 @@ class WrappedApp extends App<AppInitialProps> {
 	// };
 	//
 	// NextComponentType {getInitialProps }
+	/*
 	public static getInitialProps = async ({ Component, ctx }: AppContext) => {
 		// Keep in mind that this will be called twice on server, one for page and second for error page
 		ctx.store.dispatch({ type: "APP_gayrat_action", payload: "_app gayrat" });
@@ -39,6 +40,8 @@ class WrappedApp extends App<AppInitialProps> {
 			},
 		};
 	};
+
+	 */
 
 	public render() {
 		const { Component, pageProps } = this.props;
