@@ -56,7 +56,7 @@ const Btn = styled.button`
 	margin-top: 20px;
 `;
 
-const GameSpacePageClass: NextPage<OtherProps & PropsFromRedux> = (props) => {
+const GameSpacePageFunc: NextPage<OtherProps & PropsFromRedux> = (props) => {
 	function calcNextState(e) {
 		e.preventDefault();
 		props.nextState(null);
@@ -80,7 +80,7 @@ const GameSpacePageClass: NextPage<OtherProps & PropsFromRedux> = (props) => {
    */
 
 	return (
-		<div>
+		<Layout>
 			<FlexWrapper>
 				<GameSpace cellSize={20} showNeighbors={false} />
 				<GameSpace cellSize={20} showNeighbors={true} />
@@ -90,7 +90,7 @@ const GameSpacePageClass: NextPage<OtherProps & PropsFromRedux> = (props) => {
 			<Btn onClick={calcNextState}>Следующее состояние</Btn>
 			<Btn onClick={startTimerSaga}>Запустить таймер</Btn>
 			<Btn onClick={stopTimerSaga}>Остановить таймер</Btn>
-		</div>
+		</Layout>
 	);
 };
 
@@ -106,4 +106,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-export const GameSpacePage = connector(GameSpacePageClass);
+const GameSpacePage = connector(GameSpacePageFunc);
+
+// eslint-disable-next-line no-restricted-syntax
+export default GameSpacePage;
