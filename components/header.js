@@ -5,6 +5,7 @@ import styles from "./header.module.css";
 // The approach used in this component shows how to built a sign in and sign out
 // component that works on pages which support both client and server side
 // rendering, and avoids any flash incorrect content on initial page load.
+// eslint-disable-next-line no-restricted-syntax
 export default function Header() {
   const [session, loading] = useSession();
 
@@ -71,8 +72,13 @@ export default function Header() {
             </Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="/client">
-              <a>Client</a>
+            <Link href="/">
+              <a>Home</a>
+            </Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link href="/gamespacePage">
+              <a>Игра жизнь</a>
             </Link>
           </li>
           <li className={styles.navItem}>

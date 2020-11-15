@@ -1,10 +1,12 @@
 import {
+  Action,
   CaseReducer,
   createAction,
   createSlice,
   PayloadAction,
   SliceCaseReducers,
 } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 export interface lifeStateType {
   state: number[][];
@@ -73,6 +75,19 @@ export const lifeStateSlice = createSlice<
 >({
   name: "lifeState",
   initialState: defaultlifeState,
+
+  // С сервера поступают начальные данные
+  extraReducers: (builder) => {
+    builder.addCase(HYDRATE, (state, action) => {
+      // action is inferred correctly here if using TS
+      // payload: { lifeState: { state: [], neighbors: [], sizex: 0, sizey: 0 } }
+      const lifePayload = (action as any)?.payload?.lifeState;
+      if (lifePayload) {
+        return lifePayload;
+      } else return state;
+    });
+  },
+
   reducers: {
     initState(
       state,
