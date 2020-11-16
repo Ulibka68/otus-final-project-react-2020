@@ -55,3 +55,7 @@ export function* timerChannelsSaga() {
     }
   }
 }
+
+function* putLifeStateSQL(user: string, comment: string, state: object) {
+  const stateJson = JSON.stringify(state);
+}
