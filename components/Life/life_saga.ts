@@ -1,7 +1,16 @@
-import { takeEvery, call, put, fork, race, take } from "redux-saga/effects";
+import {
+  takeEvery,
+  call,
+  put,
+  fork,
+  race,
+  take,
+  select,
+} from "redux-saga/effects";
 import { eventChannel, END } from "redux-saga";
 
 import { nextState, stopTimer } from "./life_reducer";
+import { getTimerInterval } from "@redux/store";
 
 const delay = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
 
@@ -26,7 +35,8 @@ function timerChannels(sec: number) {
 }
 
 export function* timerChannelsSaga() {
-  const chanel = yield call(timerChannels, 2);
+  const ti = yield select(getTimerInterval);
+  const chanel = yield call(timerChannels, ti);
 
   while (true) {
     // const event = yield take([chanel, stopTimer.type]);

@@ -39,7 +39,7 @@ export default LifeGame;
 
 export const getStaticProps = wrapper.getStaticProps(({ store }) => {
 	// Провести начальную инициализацию жизни
-	store.dispatch(life.initState({ sizex: 10, sizey: 10 }));
+	store.dispatch(life.initState({ sizex: 20, sizey: 20 }));
 	store.dispatch(life.randomSeed({ seedPercent: 0.3 }));
 	store.dispatch(life.caclNeighbors(null));
 	// само состояние с сервера вернется в виде action __NEXT_REDUX_WRAPPER_HYDRATE__
@@ -73,6 +73,20 @@ const GameSpacePageFunc: NextPage<OtherProps & PropsFromRedux> = (props) => {
 		props.stopTimer();
 	}
 
+	function randomFill(e) {
+		e.preventDefault();
+		props.stopTimer();
+		props.randomSeed({ seedPercent: 0.3 });
+		props.caclNeighbors(null);
+	}
+
+	function setTimerInterval(e) {
+		e.preventDefault();
+		props.stopTimer();
+		props.setTimerInterval({ timerInteraval: 1.5 });
+		props.startTimer();
+	}
+
 	/*
 	componentWillUnmount() {
 		this.stopTimerSaga();
@@ -83,13 +97,15 @@ const GameSpacePageFunc: NextPage<OtherProps & PropsFromRedux> = (props) => {
 		<Layout>
 			<FlexWrapper>
 				<GameSpace cellSize={20} showNeighbors={false} />
-				<GameSpace cellSize={20} showNeighbors={true} />
+				{/*<GameSpace cellSize={20} showNeighbors={true} />*/}
 			</FlexWrapper>
 
 			<p>{props.msg}</p>
 			<Btn onClick={calcNextState}>Следующее состояние</Btn>
 			<Btn onClick={startTimerSaga}>Запустить таймер</Btn>
 			<Btn onClick={stopTimerSaga}>Остановить таймер</Btn>
+			<Btn onClick={randomFill}>Заполнить случайно</Btn>
+			<Btn onClick={setTimerInterval}>Установить интервал таймера</Btn>
 		</Layout>
 	);
 };
@@ -99,6 +115,8 @@ const connector = connect((state: LifeGameRootState) => state.lifeState, {
 	nextState: life.nextState,
 	stopTimer: life.stopTimer,
 	startTimer: life.startTimer,
+	randomSeed: life.randomSeed,
+	setTimerInterval: life.setTimerInterval,
 });
 
 // The inferred type will look like:

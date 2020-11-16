@@ -18,6 +18,8 @@ const reducer = combineReducers({
 });
 
 export type LifeGameRootState = ReturnType<typeof reducer>;
+export const getTimerInterval = (state: LifeGameRootState) =>
+  state.lifeState.timer_next_state_second;
 
 // Context = NextPageContext | AppContext | GetStaticPropsContext | GetServerSidePropsContext;
 

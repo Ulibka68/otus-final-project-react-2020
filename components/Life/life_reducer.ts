@@ -13,6 +13,7 @@ export interface lifeStateType {
   neighbors: number[][];
   sizex: number;
   sizey: number;
+  timer_next_state_second: number;
 }
 
 const defaultlifeState: lifeStateType = {
@@ -20,6 +21,7 @@ const defaultlifeState: lifeStateType = {
   neighbors: [],
   sizex: 0,
   sizey: 0,
+  timer_next_state_second: 0.6,
 };
 
 function fillStateFromConst(
@@ -105,7 +107,15 @@ export const lifeStateSlice = createSlice<
         ),
         sizex: action.payload.sizex,
         sizey: action.payload.sizey,
+        timer_next_state_second: 0.6,
       };
+    },
+
+    setTimerInterval(state, action: PayloadAction<{ timerInteraval: number }>) {
+      const ti = action.payload.timerInteraval;
+      if (ti > 0.1 && ti < 5) {
+        state.timer_next_state_second = ti;
+      }
     },
 
     randomSeed(state, action: PayloadAction<{ seedPercent: number }>) {
@@ -113,6 +123,13 @@ export const lifeStateSlice = createSlice<
         let x = Math.floor(Math.random() * size);
         if (x === size) x--;
         return x;
+      }
+
+      // обнулить массив
+      for (let y = 0; y < state.sizey; y++) {
+        for (let x = 0; x < state.sizex; x++) {
+          state.state[y][x] = 0;
+        }
       }
 
       //  заполнить массив случайно
@@ -173,4 +190,5 @@ export const {
   planer1Seed,
   randomSeed,
   initState,
+  setTimerInterval,
 } = lifeStateSlice.actions;
