@@ -8,9 +8,13 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CustomizedSlider from "./slider";
 
-export default function FormDialog() {
+import { connect, ConnectedProps } from "react-redux";
+import { LifeGameRootState } from "@redux/store";
+import * as life from "components/Life/life_reducer";
+
+function FormDialog(props: PropsFromRedux) {
   const [open, setOpen] = React.useState(false);
-  const refSlidwer = useRef(0.6);
+  const refSlidwer = useRef(props.timer_next_state_second);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,7 +28,8 @@ export default function FormDialog() {
   };
 
   function handleSetInterval() {
-    console.log(refSlidwer.current);
+    // console.log(refSlidwer.current);
+    props.setTimerInterval({ timerInteraval: refSlidwer.current });
     setOpen(false);
   }
 
@@ -45,7 +50,10 @@ export default function FormDialog() {
           <DialogContentText>
             Установите значения таймера для показа следующего состояния
           </DialogContentText>
-          <CustomizedSlider onChange={sliderValueChanged} defaultValue={0.7} />
+          <CustomizedSlider
+            onChange={sliderValueChanged}
+            defaultValue={props.timer_next_state_second}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -59,3 +67,15 @@ export default function FormDialog() {
     </div>
   );
 }
+
+const connector = connect((state: LifeGameRootState) => state.lifeState, {
+  setTimerInterval: life.setTimerInterval,
+});
+
+// The inferred type will look like:
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const FormDialogRedux = connector(FormDialog);
+
+// eslint-disable-next-line no-restricted-syntax
+export default FormDialogRedux;

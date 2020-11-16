@@ -9,33 +9,12 @@ import { wrapper, LifeGameRootState } from "@redux/store";
 import { GameSpace } from "components/Life/gameSpace";
 import { keyframes, css, Global } from "@emotion/react";
 import styled from "@emotion/styled";
+import FormDialog from "components/dialog-timer/dialog";
 
 interface OtherProps {
 	msg: string;
 	appProp: string;
 }
-
-/*
-const LifeGame: NextPage<OtherProps> = ({ msg }) => {
-	const [session, loading] = useSession();
-	const currentLifeState: life.lifeStateType = useSelector<life.lifeStateType, life.lifeStateType>((state) => state);
-
-	// console.log(session);
-
-	// console.log("********************************************************************");
-	// console.log(currentLifeState);
-	// console.log("--------------------------------------------------------------------");
-	return (
-		<Layout>
-			<p>Заготовка для game of life</p>
-			<p>{msg}</p>
-		</Layout>
-	);
-};
-
-// eslint-disable-next-line no-restricted-syntax
-export default LifeGame;
-*/
 
 export const getStaticProps = wrapper.getStaticProps(({ store }) => {
 	// Провести начальную инициализацию жизни
@@ -105,7 +84,8 @@ const GameSpacePageFunc: NextPage<OtherProps & PropsFromRedux> = (props) => {
 			<Btn onClick={startTimerSaga}>Запустить таймер</Btn>
 			<Btn onClick={stopTimerSaga}>Остановить таймер</Btn>
 			<Btn onClick={randomFill}>Заполнить случайно</Btn>
-			<Btn onClick={setTimerInterval}>Установить интервал таймера</Btn>
+
+			<FormDialog />
 		</Layout>
 	);
 };
