@@ -1,0 +1,35 @@
+=============================
+Подключаем Redux
+
+The wrapper can also be attached to your _app component (located in /pages). All other components can use the connect function of react-redux.
+
+1. В _app
+export default wrapper.withRedux(WrappedApp);
+
+2. В страницах
+Если класс - импользуй connect - оборачивать не надо
+
+3. Если функциональный компонент
+import { wrapper } from "@components/store";
+внутри useSelector
+export const getServerSideProps
+
+
+=======================================================
+Plugin для путей:
+
+With webpack
+For webpack please use the tsconfig-paths-webpack-plugin
+npm install --save-dev tsconfig-paths tsconfig-paths-webpack-plugin
+
+In your webpack config add this:
+
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
+module.exports = {
+  ...
+  resolve: {
+    plugins: [new TsconfigPathsPlugin({/* options: see below */})]
+  }
+  ...
+}

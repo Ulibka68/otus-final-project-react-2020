@@ -4,7 +4,8 @@
     "paths": {
       "types/*": ["src/types/*"],
       "components/*": ["components/*"],
-      "utils/*": ["utils/*"],
+      "@redux/*": ["redux/*"],
+      "@utils/*": ["utils/*"],
       "@/*": ["src/pages/*"]
     },
     "target": "es5",
