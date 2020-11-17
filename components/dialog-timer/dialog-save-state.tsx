@@ -63,7 +63,7 @@ function FormDialog(props: PropsFromRedux & tUserName) {
           <DialogContentText>
             Введите комментарий для сохраненного состояния.
           </DialogContentText>
-          <p>Input</p>
+
           <TextField
             variant="outlined"
             margin="normal"
