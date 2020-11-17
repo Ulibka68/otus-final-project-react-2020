@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef } from "react";
+import React, { ChangeEvent, useRef, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -19,6 +19,7 @@ import Brightness1OutlinedIcon from "@material-ui/icons/Brightness1Outlined";
 import { connect, ConnectedProps } from "react-redux";
 import { LifeGameRootState } from "@redux/store";
 import * as life from "components/Life/life_reducer";
+import * as show from "components/dialog-timer/dialog-show-state-reduser";
 
 import test_answer from "./sqlList.json";
 
@@ -27,9 +28,16 @@ interface tUserName {
 }
 
 function FormDialog(props: PropsFromRedux & tUserName) {
+  // useEffect(() => {
+  //   // получить список сохраненных состояний
+  //   props.sendQuery({ user: props.userNameFromSeesion });
+  // }, [props.userNameFromSeesion]);
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
+    props.stopTimer();
+    props.sendQuery({ user: props.userNameFromSeesion });
     setOpen(true);
   };
 
@@ -65,7 +73,7 @@ function FormDialog(props: PropsFromRedux & tUserName) {
           </DialogContentText>
 
           <SelectedListItem
-            dataItems={test_answer}
+            dataItems={props.show.dbItems}
             handleParent={handleParent}
           />
         </DialogContent>
@@ -82,9 +90,10 @@ function FormDialog(props: PropsFromRedux & tUserName) {
   );
 }
 
+//***************************************************************************************************
 const connector = connect((state: LifeGameRootState) => state, {
-  setTimerInterval: life.setTimerInterval,
-  putStateToSQL: life.putStateToSQL,
+  sendQuery: show.sendQuery,
+  stopTimer: life.stopTimer,
 });
 
 // The inferred type will look like:
@@ -94,6 +103,7 @@ const FormDialogShowRedux = connector(FormDialog);
 
 // eslint-disable-next-line no-restricted-syntax
 export default FormDialogShowRedux;
+//***************************************************************************************************
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

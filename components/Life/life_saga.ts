@@ -27,9 +27,9 @@ const delay = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
 
 function timerChannels(sec: number) {
   return eventChannel((emitter) => {
-    let cnt = 0;
+    const cnt = 0;
     const timerId = setInterval(() => {
-      console.log("timer : ", ++cnt);
+      // console.log("timer : ", ++cnt);
       emitter(cnt);
     }, sec * 1000);
     // The subscriber must return an unsubscribe function
@@ -80,11 +80,10 @@ function fetchBody2() {
     body: new FormData(postData),
   });
 }
-
+ 
  */
 
 function fetchBody3(payload: tStateToSQL) {
-  ;
   fetch("api/life/putSql", {
     method: "PUT",
     headers: {

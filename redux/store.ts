@@ -5,12 +5,15 @@ import {
   timerChannelsSaga,
   putStateToSqlSaga,
 } from "components/Life/life_saga";
-import * as life_reducer from "components/Life/life_reducer";
+import { getSavedStateDromDB } from "components/dialog-timer/dialog-show-state-saga";
 import logger from "redux-logger";
 import { MakeStore, createWrapper, Context } from "next-redux-wrapper";
+import * as life_reducer from "components/Life/life_reducer";
+import * as show from "components/dialog-timer/dialog-show-state-reduser";
 
 function* rootSaga() {
   yield fork(putStateToSqlSaga);
+  yield fork(getSavedStateDromDB);
   while (true) {
     const event = yield take(life_reducer.startTimer.type);
     yield fork(timerChannelsSaga);
@@ -19,9 +22,11 @@ function* rootSaga() {
 
 const reducer = combineReducers({
   lifeState: life_reducer.reducer,
+  show: show.reducer,
 });
 
 export type LifeGameRootState = ReturnType<typeof reducer>;
+
 export const getTimerInterval = (state: LifeGameRootState) =>
   state.lifeState.timer_next_state_second;
 
@@ -36,7 +41,7 @@ export const makeStore: MakeStore<LifeGameRootState> = (context: Context) => {
     //  на сервере мне saga не нужна
     store = configureStore({
       reducer,
-      middleware: [logger],
+      // middleware: [logger],
       devTools: true,
     });
   } else {
@@ -57,7 +62,8 @@ export const makeStore: MakeStore<LifeGameRootState> = (context: Context) => {
 
     store = configureStore({
       reducer,
-      middleware: [sagaMiddleware, logger],
+      // middleware: [sagaMiddleware, logger],
+      middleware: [sagaMiddleware],
       devTools: true,
     });
 
@@ -67,5 +73,5 @@ export const makeStore: MakeStore<LifeGameRootState> = (context: Context) => {
 };
 
 export const wrapper = createWrapper<LifeGameRootState>(makeStore, {
-  debug: true,
+  debug: false,
 });
