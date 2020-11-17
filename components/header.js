@@ -72,11 +72,6 @@ export default function Header() {
             </Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="/">
-              <a>Home</a>
-            </Link>
-          </li>
-          <li className={styles.navItem}>
             <Link href="/gamespacePage">
               <a>Игра жизнь</a>
             </Link>
@@ -92,23 +87,8 @@ export default function Header() {
             </Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="/api-example">
-              <a>API</a>
-            </Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link href="/users">
-              <a>User REST api</a>
-            </Link>
-          </li>
-          <li className={styles.navItem}>
             <Link href="/data-static">
               <a>Меню товаров</a>
-            </Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link href="/data-static/1">
-              <a>Динамический роутинг 1</a>
             </Link>
           </li>
         </ul>
