@@ -17,59 +17,48 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 // https://nextjs.org/docs/routing/dynamic-routes
 // eslint-disable-next-line no-restricted-syntax
-export default function OneItem(
-  props: InferGetStaticPropsType<typeof getStaticProps>
-) {
-  const router = useRouter();
-  // console.log("router.query : ", router.query);
-  console.log("props : ", props);
+export default function OneItem(props: InferGetStaticPropsType<typeof getStaticProps>) {
+	const router = useRouter();
+	// console.log("router.query : ", router.query);
+	console.log("props : ", props);
 
-  if (!props.post || !props.post.id) return <div>Загрузка</div>;
+	if (!props.post || !props.post.id) return <div>Загрузка</div>;
 
-  let pictURL = null;
+	let pictURL = null;
 
-  if (props.post.id > -1) {
-    if (props.post.pictures.pictures.length > 0) {
-      pictURL = props.post.pictures.pictures[0];
-      // console.log("pictURL :", pictURL);
-    }
-  }
+	if (props.post.id > -1) {
+		if (props.post.pictures.pictures.length > 0) {
+			pictURL = props.post.pictures.pictures[0];
+			// console.log("pictURL :", pictURL);
+		}
+	}
 
-  return (
-    <Layout>
-      <div>
-        <h1>Динамический роутинг</h1>
-        <p>Данные роутера: {router.query.dataid}</p>
-      </div>
+	return (
+		<Layout>
+			<div>
+				<h1>Динамический роутинг</h1>
+				<p>Данные роутера: {router.query.dataid}</p>
+			</div>
 
-      {props.post.id === -1 && <p>Ошибка : {props.error}</p>}
-      {props.post.id > -1 && (
-        <>
-          <div>
-            <p>название : {props.post.название}</p>
-            <p>цена : {props.post["розничная цена"]}</p>
-            <div>
-              <b>описание</b> :{/*{props.post.описание}*/}
-              <GoodsDescription
-                description={props.post.описание}
-              ></GoodsDescription>
-            </div>
-          </div>
-          <div>
-            {/*  картинка*  src={pictURL} */}
-            {pictURL && (
-              <Image
-                src={pictURL}
-                alt="Picture of the author"
-                width={300}
-                height={300}
-              />
-            )}
-          </div>
-        </>
-      )}
-    </Layout>
-  );
+			{props.post.id === -1 && <p>Ошибка : {props.error}</p>}
+			{props.post.id > -1 && (
+				<>
+					<div>
+						<p>название : {props.post.название}</p>
+						<p>цена : {props.post["розничная цена"]}</p>
+						<div>
+							<b>описание</b> :{/*{props.post.описание}*/}
+							<GoodsDescription description={props.post.описание}></GoodsDescription>
+						</div>
+					</div>
+					<div>
+						{/*  картинка*  src={pictURL} */}
+						{pictURL && <Image src={pictURL} alt="Picture of the author" width={300} height={300} />}
+					</div>
+				</>
+			)}
+		</Layout>
+	);
 }
 
 // https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation
@@ -86,57 +75,51 @@ export default function OneItem(
 // Next.js will statically pre-render all the paths specified by getStaticPaths.
 
 export async function getStaticPaths() {
-  return {
-    paths: [{ params: { dataid: "1" } }],
-    fallback: true,
-  };
+	return {
+		paths: [{ params: { dataid: "1" } }],
+		fallback: true,
+	};
 }
 
 type GoodDescription = {
-  id: number;
-  название?: string;
-  "розничная цена"?: number;
-  описание?: string;
-  "в комплект включено"?: string;
-  валюта?: string;
-  fk_Единица_измерения?: number;
-  "единица измерения"?: string;
-  attributes?: any;
-  pictures?: any;
+	id: number;
+	название?: string;
+	"розничная цена"?: number;
+	описание?: string;
+	"в комплект включено"?: string;
+	валюта?: string;
+	fk_Единица_измерения?: number;
+	"единица измерения"?: string;
+	attributes?: any;
+	pictures?: any;
 };
 
 type GoodProps = { post?: GoodDescription; error?: string };
 
 export const getStaticProps: GetStaticProps<GoodProps> = async (context) => {
-  // console.log("context.params : ", context.params.dataid);
-  const idGoodInRouter: number = Number.parseInt(
-    context.params.dataid as string
-  );
-  let retData: GoodProps;
-  // eslint-disable-next-line prefer-const
-  retData = {};
+	// console.log("context.params : ", context.params.dataid);
+	const idGoodInRouter: number = Number.parseInt(context.params.dataid as string);
+	let retData: GoodProps;
+	// eslint-disable-next-line prefer-const
+	retData = {};
 
-  if (idGoodInRouter) {
-    let data: GoodDescription = (await queryOneItem(
-      idGoodInRouter
-    )) as GoodDescription;
+	if (idGoodInRouter) {
+		let data: GoodDescription = (await queryOneItem(idGoodInRouter)) as GoodDescription;
 
-    if (data.id === -1) {
-      retData.error = "По указанному id нет товара";
-      retData.post = { id: -1 };
-    } else {
-      // data принимает таип RowDataSet, копирование свойств превращает его в обычный объект
-      data = Object.assign({}, data);
-      data.attributes = JSON.parse(data.attributes);
+		if (data.id === -1) {
+			retData.error = "По указанному id нет товара";
+			retData.post = { id: -1 };
+		} else {
+			// data принимает таип RowDataSet, копирование свойств превращает его в обычный объект
+			data = Object.assign({}, data);
+			data.attributes = JSON.parse(data.attributes);
 
-      data.pictures = data.pictures
-        ? JSON.parse(data.pictures)
-        : { pictures: [] };
-      retData.post = data;
-    }
-  } else {
-    retData.error = "Неверен URL запроса";
-    retData.post = { id: -1 };
-  }
-  return { props: retData };
+			data.pictures = data.pictures ? JSON.parse(data.pictures) : { pictures: [] };
+			retData.post = data;
+		}
+	} else {
+		retData.error = "Неверен URL запроса";
+		retData.post = { id: -1 };
+	}
+	return { props: retData };
 };

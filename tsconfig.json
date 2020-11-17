@@ -5,6 +5,7 @@
       "types/*": ["src/types/*"],
       "components/*": ["components/*"],
       "@redux/*": ["redux/*"],
+      "@utils/*": ["utils/*"],
       "@/*": ["src/pages/*"]
     },
     "target": "es5",

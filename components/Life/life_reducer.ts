@@ -182,7 +182,7 @@ export const lifeStateSlice = createSlice<
 export const stopTimer = createAction<void>("lifeState/STOP_TIMER");
 export const startTimer = createAction<void>("lifeState/START_TIMER");
 
-interface tStateToSQL {
+export interface tStateToSQL {
   user: string;
   comment: string;
   state: object;

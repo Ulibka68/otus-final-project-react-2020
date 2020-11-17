@@ -1,12 +1,16 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { fork, take } from "redux-saga/effects";
-import { timerChannelsSaga } from "components/Life/life_saga";
+import {
+  timerChannelsSaga,
+  putStateToSqlSaga,
+} from "components/Life/life_saga";
 import * as life_reducer from "components/Life/life_reducer";
 import logger from "redux-logger";
 import { MakeStore, createWrapper, Context } from "next-redux-wrapper";
 
 function* rootSaga() {
+  yield fork(putStateToSqlSaga);
   while (true) {
     const event = yield take(life_reducer.startTimer.type);
     yield fork(timerChannelsSaga);

@@ -78,5 +78,7 @@ secrets.txt
 .idea
 .run
 .secret
+.temp
+
 
 

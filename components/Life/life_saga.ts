@@ -9,16 +9,21 @@ import {
 } from "redux-saga/effects";
 import { eventChannel, END } from "redux-saga";
 
-import { nextState, stopTimer } from "./life_reducer";
+import {
+  nextState,
+  stopTimer,
+  putStateToSQL,
+  tStateToSQL,
+} from "./life_reducer";
 import { getTimerInterval } from "@redux/store";
 
 const delay = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
 
 // обновить состояние с задержкой 1 сек
-export function* nextLifeStateAsync() {
-  yield call(delay, 1000);
-  yield put(nextState(null));
-}
+// export function* nextLifeStateAsync() {
+//   yield call(delay, 1000);
+//   yield put(nextState(null));
+// }
 
 function timerChannels(sec: number) {
   return eventChannel((emitter) => {
@@ -46,7 +51,7 @@ export function* timerChannelsSaga() {
       stopTimerE: take(stopTimer.type),
     });
 
-    console.log("timerChannelsSaga event :", event);
+    // console.log("timerChannelsSaga event :", event);
 
     if (event.stopTimerE) {
       chanel.close(); // по идее сага должна убиться
@@ -56,6 +61,50 @@ export function* timerChannelsSaga() {
   }
 }
 
-function* putLifeStateSQL(user: string, comment: string, state: object) {
-  const stateJson = JSON.stringify(state);
+// получить action putStateToSQL
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+function fetchBody1() {
+  fetch("api/life/ab?hid=1&at-beru-warehouse=1").then((res) => res.json());
+}
+
+/*
+function fetchBody2() {
+  const postData = { text: "data text" };
+  fetch("api/life/ab?hid=1&at-beru-warehouse=1", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new FormData(postData),
+  });
+}
+
+ */
+
+function fetchBody3(payload: tStateToSQL) {
+  ;
+  fetch("api/life/putSql", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+}
+
+export function* putStateToSqlSaga() {
+  while (true) {
+    const action: { type: string; payload: tStateToSQL } = yield take(
+      putStateToSQL.type
+    ); // пришло событие
+    // console.log("========= SAGA START ============");
+    const data = yield call(() => {
+      return fetchBody3(action.payload);
+    });
+
+    // console.log("--------- SAGA -------------------");
+    // console.log(data);
+  }
 }
