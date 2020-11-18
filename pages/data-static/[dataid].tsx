@@ -53,7 +53,11 @@ export default function OneItem(props: InferGetStaticPropsType<typeof getStaticP
 					</div>
 					<div>
 						{/*  картинка*  src={pictURL} */}
-						{pictURL && <Image src={pictURL} alt="Picture of the author" width={300} height={300} />}
+						{/*{pictURL && <Image src={pictURL} alt="Picture of the author" width={300} height={300} />}*/}
+						{pictURL &&
+							props.post.pictures.pictures.map((urlPict, index) => (
+								<Image src={urlPict} alt={index} key={index} width={300} height={300} />
+							))}
 					</div>
 				</>
 			)}
