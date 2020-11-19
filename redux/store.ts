@@ -5,11 +5,11 @@ import {
   timerChannelsSaga,
   putStateToSqlSaga,
 } from "components/Life/life_saga";
-import { getSavedStateDromDB } from "components/dialog-timer/dialog-show-state-saga";
+import { getSavedStateDromDB } from "components/dialog-show-state/dialog-show-state-saga";
 import logger from "redux-logger";
 import { MakeStore, createWrapper, Context } from "next-redux-wrapper";
 import * as life_reducer from "components/Life/life_reducer";
-import * as show from "components/dialog-timer/dialog-show-state-reduser";
+import * as show from "components/dialog-show-state/dialog-show-state-reduser";
 
 function* rootSaga() {
   yield fork(putStateToSqlSaga);

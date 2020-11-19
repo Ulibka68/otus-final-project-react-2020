@@ -11,7 +11,7 @@ import { keyframes, css, Global } from "@emotion/react";
 import styled from "@emotion/styled";
 import FormDialog from "components/dialog-timer/dialog";
 import FormDialogSaveRedux from "components/dialog-timer/dialog-save-state";
-import FormDialogShowRedux from "components/dialog-timer/dialog-show-state";
+import FormDialogShowRedux from "components/dialog-show-state/dialog-show-state";
 
 interface OtherProps {
 	msg: string;

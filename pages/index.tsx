@@ -12,7 +12,8 @@ const IndexPage: NextPage = () => {
 		<Layout>
 			<p>Изображение сохранено в public</p>
 			<p>Next преобразовал его в формат webp - 1,7kb, первоначальный размер 293кб (jpg)</p>
-			<Image alt="Mountains" src="/mountains.jpg" layout="fixed" width={300} height={(300 * 475) / 700} />
+			<p>После смены конфигурации изображение временно исчезло :)</p>
+			{/*<Image alt="Mountains" src="/mountains.jpg" layout="fixed" width={300} height={(300 * 475) / 700} />*/}
 		</Layout>
 	);
 };

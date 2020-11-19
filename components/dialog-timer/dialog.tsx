@@ -16,13 +16,14 @@ function FormDialog(props: PropsFromRedux) {
   const [open, setOpen] = React.useState(false);
   const refSlidwer = useRef(props.timer_next_state_second);
 
-  const handleClickOpen = () => {
+  function handleClickOpen() {
     setOpen(true);
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     setOpen(false);
-  };
+  }
+
   const sliderValueChanged = (event: object, value: number) => {
     refSlidwer.current = value;
   };

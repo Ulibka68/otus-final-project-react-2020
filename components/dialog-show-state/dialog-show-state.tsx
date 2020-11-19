@@ -19,31 +19,28 @@ import Brightness1OutlinedIcon from "@material-ui/icons/Brightness1Outlined";
 import { connect, ConnectedProps } from "react-redux";
 import { LifeGameRootState } from "@redux/store";
 import * as life from "components/Life/life_reducer";
-import * as show from "components/dialog-timer/dialog-show-state-reduser";
+import * as show from "components/dialog-show-state/dialog-show-state-reduser";
+import { SelectedListItem } from "./SelectedListItem";
 
-import test_answer from "./sqlList.json";
+// Для тестирования компонента
+// import test_answer from "./sqlList.json";
 
 interface tUserName {
   userNameFromSeesion: string;
 }
 
 function FormDialog(props: PropsFromRedux & tUserName) {
-  // useEffect(() => {
-  //   // получить список сохраненных состояний
-  //   props.sendQuery({ user: props.userNameFromSeesion });
-  // }, [props.userNameFromSeesion]);
-
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  function handleClickOpen() {
     props.stopTimer();
     props.sendQuery({ user: props.userNameFromSeesion });
     setOpen(true);
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     setOpen(false);
-  };
+  }
 
   function handleSetStateToSQL() {
     setOpen(false);
@@ -104,94 +101,3 @@ const FormDialogShowRedux = connector(FormDialog);
 // eslint-disable-next-line no-restricted-syntax
 export default FormDialogShowRedux;
 //***************************************************************************************************
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: "100%",
-      maxWidth: 360,
-      backgroundColor: theme.palette.background.paper,
-    },
-  })
-);
-
-// "insertDate": "2020-11-17T05:56:01.000Z"
-type tItemState = {
-  id: number;
-  user: string;
-  comment: string;
-  insertDate: string;
-};
-type tSelectedListItemProp = {
-  dataItems: tItemState[];
-  handleParent: (keyParm: number) => any;
-};
-
-// "2020-11-17T05:56:04.000Z"
-function prettierDate(d: string): string {
-  const myregexp = /(.+)T(.+):\d{2}\.\d{3}Z/gi;
-  return d.replace(myregexp, "$1 $2");
-}
-
-function SelectedListItem({ dataItems, handleParent }: tSelectedListItemProp) {
-  const classes = useStyles();
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-
-  const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number
-  ) => {
-    handleParent(dataItems[index].id);
-    setSelectedIndex(index);
-  };
-
-  return (
-    <div className={classes.root}>
-      <List component="nav" aria-label="main mailbox folders">
-        {dataItems.map((value, index) => (
-          <ListItemCust
-            keyNum={index}
-            key={index}
-            text={`${value.comment} : ${prettierDate(value.insertDate)}`}
-            selectedIndex={selectedIndex}
-            handleListItemClick={handleListItemClick}
-          />
-        ))}
-      </List>
-    </div>
-  );
-}
-
-type tListItemCustProps = {
-  selectedIndex: number;
-  keyNum: number;
-  text: string;
-  handleListItemClick: (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    keyParm: number
-  ) => any;
-};
-
-function ListItemCust({
-  selectedIndex,
-  keyNum,
-  text,
-  handleListItemClick,
-}: tListItemCustProps) {
-  return (
-    <ListItem
-      button
-      selected={selectedIndex === keyNum}
-      onClick={(event) => handleListItemClick(event, keyNum)}
-    >
-      <ListItemIcon>
-        {selectedIndex === keyNum ? (
-          <CheckCircleOutlineOutlinedIcon />
-        ) : (
-          <Brightness1OutlinedIcon />
-        )}
-      </ListItemIcon>
-      <ListItemText primary={text} />
-    </ListItem>
-  );
-}

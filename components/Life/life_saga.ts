@@ -19,12 +19,6 @@ import { getTimerInterval } from "@redux/store";
 
 const delay = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
 
-// обновить состояние с задержкой 1 сек
-// export function* nextLifeStateAsync() {
-//   yield call(delay, 1000);
-//   yield put(nextState(null));
-// }
-
 function timerChannels(sec: number) {
   return eventChannel((emitter) => {
     const cnt = 0;
